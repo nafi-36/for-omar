@@ -1,6 +1,6 @@
 # You've Got This, Omar 🌅
 
-A small personal website made to cheer on a friend the night before a big day — built with nothing but plain HTML, CSS, and JavaScript.
+A small personal website to cheer someone on the night before a big day — built with nothing but plain HTML, CSS, and JavaScript.
 
 ## Features
 
