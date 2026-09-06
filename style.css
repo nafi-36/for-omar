@@ -1,0 +1,430 @@
+:root{
+  --night: #140F2B;
+  --night2: #1F1640;
+  --panel: #251B47;
+  --panel-light: #2E2255;
+  --amber: #FFB870;
+  --coral: #FF8C6B;
+  --text: #F3EEFF;
+  --text-dim: #A79BC9;
+  --slate: #6C5F94;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+
+body{
+  background:var(--night);
+  color:var(--text);
+  font-family:'Inter', sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+h1,h2,h3{
+  font-family:'Space Grotesk', sans-serif;
+  font-weight:600;
+  letter-spacing:-0.01em;
+}
+
+section{
+  padding:6rem 1.5rem;
+  max-width:640px;
+  margin:0 auto;
+  position:relative;
+}
+
+/* ---------- Ambient full-page night sky ---------- */
+.bg-stars{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  overflow:hidden;
+  pointer-events:none;
+  background:radial-gradient(ellipse at top, var(--night2) 0%, var(--night) 65%);
+}
+.bg-star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:var(--text);
+  border-radius:50%;
+  opacity:0.2;
+  animation:twinkleBg 3.4s ease-in-out infinite;
+}
+@keyframes twinkleBg{
+  0%,100%{ opacity:0.15; }
+  50%{ opacity:0.9; }
+}
+.shooting-star{
+  position:absolute;
+  top:8%;
+  left:-5%;
+  width:3px;
+  height:3px;
+  background:white;
+  border-radius:50%;
+  box-shadow:0 0 6px 1px rgba(255,255,255,0.8);
+  opacity:0;
+  animation:shoot 9s linear infinite;
+  animation-delay:3s;
+}
+.shooting-star::before{
+  content:'';
+  position:absolute;
+  top:50%;
+  right:100%;
+  width:80px;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.7));
+  transform:translateY(-50%);
+}
+@keyframes shoot{
+  0%{ opacity:0; transform:translate(0,0); }
+  4%{ opacity:1; }
+  14%{ opacity:0; transform:translate(50vw, 22vh); }
+  100%{ opacity:0; transform:translate(50vw, 22vh); }
+}
+
+/* ---------- Scroll progress: night to dawn ---------- */
+#progressTrack{
+  position:fixed;
+  top:0; left:0;
+  width:100%;
+  height:4px;
+  background:var(--night2);
+  z-index:90;
+}
+#progressFill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg, var(--slate), var(--amber));
+  box-shadow:0 0 8px var(--amber);
+  transition:width 0.08s linear;
+}
+
+/* ---------- Section reveal on scroll ---------- */
+.reveal{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.in-view{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ---------- Divider ---------- */
+.divider{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.8rem;
+  margin:2rem auto;
+  max-width:200px;
+  opacity:0.5;
+}
+.divider::before, .divider::after{
+  content:'';
+  height:1px;
+  flex:1;
+  background:linear-gradient(90deg, transparent, var(--slate), transparent);
+}
+.divider span{ color:var(--amber); font-size:0.9rem; }
+
+/* ---------- Opening overlay ---------- */
+#overlay{
+  position:fixed; inset:0;
+  background:var(--night);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+  transition:opacity 0.9s ease, visibility 0.9s ease;
+  text-align:center;
+  padding:2rem;
+}
+#overlay.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+#overlay p.pre{ color:var(--text-dim); font-size:0.95rem; margin-bottom:1.8rem; letter-spacing:0.02em; }
+#openBtn{
+  background:transparent;
+  border:1.5px solid var(--amber);
+  color:var(--text);
+  font-family:'Space Grotesk', sans-serif;
+  font-size:1.1rem;
+  padding:0.9rem 2.2rem;
+  border-radius:999px;
+  cursor:pointer;
+  transition:background 0.3s ease, transform 0.2s ease;
+}
+#openBtn:hover{ background:#3A2A1A; transform:translateY(-2px); }
+
+/* ---------- Hero ---------- */
+#hero{
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding-top:4rem;
+  padding-bottom:4rem;
+  position:relative;
+  overflow:hidden;
+}
+#hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at 50% 100%, rgba(255,184,112,0.30), transparent 70%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
+  opacity:0;
+  transition:opacity 2.2s ease;
+  pointer-events:none;
+  z-index:0;
+}
+#hero.risen::before{ opacity:1; }
+#hero > *{ position:relative; z-index:1; }
+
+#hero .eyebrow{ color:var(--text-dim); font-size:0.9rem; margin-bottom:1rem; }
+#hero h1{ font-size:clamp(2.2rem, 6vw, 3.6rem); line-height:1.15; }
+#hero h1 span{ color:var(--amber); }
+#hero .sub{ margin-top:1.2rem; color:var(--text-dim); font-size:1.05rem; max-width:36ch; transition:opacity 0.4s ease; }
+
+/* ---------- Sunrise interaction ---------- */
+.sunrise-scene{ width:100%; max-width:340px; margin:2.2rem auto 0.5rem; }
+.sunrise-scene svg{ width:100%; height:auto; display:block; overflow:visible; }
+#sunCircle{ transition:transform 2.6s cubic-bezier(0.2,0.7,0.3,1); transform:translateY(0); }
+#hero.risen #sunCircle{ transform:translateY(-62px); }
+#sunGlow{ opacity:0; transition:opacity 2.6s ease; }
+#hero.risen #sunGlow{ opacity:0.7; }
+
+#sunriseBtn{
+  margin-top:1rem;
+  background:var(--panel);
+  border:1.5px solid var(--slate);
+  color:var(--text);
+  font-family:'Space Grotesk', sans-serif;
+  font-size:0.95rem;
+  padding:0.8rem 1.6rem;
+  border-radius:999px;
+  cursor:pointer;
+  transition:transform 0.2s ease, border-color 0.3s ease;
+}
+#sunriseBtn:hover{ transform:translateY(-2px); border-color:var(--amber); }
+#sunriseBtn:disabled{ opacity:0.6; cursor:default; transform:none; }
+#sunriseCaption{ color:var(--text-dim); font-size:0.9rem; margin-top:0.9rem; min-height:1.4em; }
+
+/* ---------- Fireflies mini-game ---------- */
+#fireflyZone{ position:relative; width:100%; height:110px; margin-top:0.5rem; }
+.firefly{
+  position:absolute;
+  bottom:0;
+  width:8px; height:8px;
+  border-radius:50%;
+  background:var(--amber);
+  box-shadow:0 0 8px 2px rgba(255,184,112,0.7);
+  cursor:pointer;
+  animation:float-firefly 3.6s ease-in-out infinite;
+  transition:transform 0.35s ease, opacity 0.35s ease;
+}
+.firefly.popped{ transform:scale(2); opacity:0; pointer-events:none; }
+@keyframes float-firefly{
+  0%,100%{ transform:translateY(0) translateX(0); opacity:0.6; }
+  50%{ transform:translateY(-18px) translateX(6px); opacity:1; }
+}
+
+/* ---------- Checklist recap ---------- */
+#recap{ text-align:center; }
+.recap-list{
+  list-style:none;
+  text-align:left;
+  max-width:420px;
+  margin:1.5rem auto 0;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+.recap-list li{
+  display:flex;
+  align-items:center;
+  gap:0.8rem;
+  background:var(--panel);
+  border-radius:12px;
+  padding:1rem 1.2rem;
+  opacity:0.3;
+  transition:opacity 0.5s ease, transform 0.5s ease;
+  transform:translateX(-8px);
+}
+.recap-list li.checked{ opacity:1; transform:translateX(0); }
+.recap-check{
+  width:22px; height:22px; min-width:22px;
+  border-radius:50%;
+  border:2px solid var(--slate);
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.8rem;
+  color:transparent;
+  transition:background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.recap-list li.checked .recap-check{
+  background:var(--amber);
+  border-color:var(--amber);
+  color:var(--night);
+}
+
+/* ---------- Breathing exercise ---------- */
+#breathe{ text-align:center; }
+.breathe-circle{
+  width:150px; height:150px;
+  border-radius:50%;
+  border:2px solid var(--amber);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:2.2rem auto;
+  transition:transform 4s ease-in-out, border-color 4s ease;
+  font-family:'Space Grotesk', sans-serif;
+  color:var(--text-dim);
+  font-size:0.95rem;
+  text-align:center;
+  padding:1rem;
+}
+.breathe-circle.inhale{ transform:scale(1.35); border-color:var(--coral); }
+#breatheBtn{
+  background:transparent;
+  border:1.5px solid var(--slate);
+  color:var(--text);
+  font-family:'Space Grotesk', sans-serif;
+  font-size:0.95rem;
+  padding:0.8rem 1.8rem;
+  border-radius:999px;
+  cursor:pointer;
+  transition:transform 0.2s ease, border-color 0.3s ease;
+}
+#breatheBtn:hover{ transform:translateY(-2px); border-color:var(--amber); }
+#breatheBtn:disabled{ opacity:0.6; cursor:default; transform:none; }
+
+/* ---------- Letter flip card ---------- */
+#letter{ perspective:1600px; }
+.flip-outer{ position:relative; min-height:420px; }
+.flip-inner{
+  position:relative;
+  width:100%;
+  min-height:420px;
+  transition:transform 0.9s cubic-bezier(0.4,0.2,0.2,1);
+  transform-style:preserve-3d;
+}
+.flip-inner.flipped{ transform:rotateY(180deg); }
+.flip-face{ position:absolute; inset:0; backface-visibility:hidden; border-radius:6px; }
+.flip-front{
+  background:var(--panel);
+  border:1.5px dashed var(--slate);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  text-align:center;
+  padding:2rem;
+}
+.flip-front .env-icon{ margin-bottom:1.2rem; }
+.flip-front .env-label{ font-family:'Space Grotesk', sans-serif; font-size:1.1rem; color:var(--text); }
+.flip-front .env-sub{ color:var(--text-dim); font-size:0.9rem; margin-top:0.5rem; }
+.flip-back{
+  background:var(--panel);
+  border-left:3px solid var(--amber);
+  padding:2.5rem 2rem;
+  transform:rotateY(180deg);
+  overflow-y:auto;
+}
+.flip-back .label{ color:var(--amber); font-size:0.85rem; font-family:'Space Grotesk', sans-serif; margin-bottom:1.2rem; display:block; }
+.flip-back p{ color:var(--text); font-size:1.02rem; margin-bottom:1.1rem; }
+.flip-back p:last-child{ margin-bottom:0; }
+.flip-back .signoff{ margin-top:1.6rem; color:var(--text-dim); font-style:italic; }
+
+/* ---------- Encouragement section ---------- */
+#encourage{ text-align:center; }
+#encourage h2{ font-size:clamp(1.6rem, 4vw, 2.1rem); margin-bottom:0.5rem; }
+#encourage .anchor{
+  font-family:'Space Grotesk', sans-serif;
+  font-size:1.25rem;
+  color:var(--amber);
+  max-width:38ch;
+  margin:0 auto 1.4rem;
+  transition:opacity 0.35s ease;
+}
+#moreQuoteBtn{
+  background:transparent;
+  border:1.5px solid var(--slate);
+  color:var(--text);
+  font-family:'Space Grotesk', sans-serif;
+  font-size:0.95rem;
+  padding:0.75rem 1.6rem;
+  border-radius:999px;
+  cursor:pointer;
+  transition:border-color 0.3s ease, transform 0.2s ease;
+}
+#moreQuoteBtn:hover{ border-color:var(--amber); transform:translateY(-2px); }
+
+/* ---------- Spotify embed ---------- */
+.spotify-embed{
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+.spotify-embed iframe{
+  display: block;
+  border-radius: 16px;
+}
+
+/* ---------- Closing ---------- */
+#closing{ text-align:center; padding-bottom:8rem; }
+#closing h2{ font-size:clamp(1.6rem, 4vw, 2.1rem); margin-bottom:0.8rem; }
+#closing .sub{ color:var(--text-dim); margin-bottom:2rem; }
+#cheerBtn{
+  background:linear-gradient(90deg, var(--amber), var(--coral));
+  color:var(--night);
+  border:none;
+  font-family:'Space Grotesk', sans-serif;
+  font-weight:600;
+  font-size:1rem;
+  padding:0.9rem 2.2rem;
+  border-radius:999px;
+  cursor:pointer;
+  transition:transform 0.2s ease;
+}
+#cheerBtn:hover{ transform:translateY(-2px); }
+
+footer{ text-align:center; padding:2rem 1.5rem 3rem; color:var(--slate); font-size:0.85rem; }
+
+/* ---------- Confetti ---------- */
+.confetti-piece{
+  position:fixed;
+  top:-10px;
+  z-index:200;
+  pointer-events:none;
+  border-radius:2px;
+  will-change:transform;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  #overlay{ transition:none; }
+  .reveal{ opacity:1; transform:none; transition:none; }
+  .bg-star{ animation:none; opacity:0.4; }
+  .shooting-star{ animation:none; display:none; }
+  .firefly{ animation:none; }
+  .breathe-circle{ transition:none; }
+}
+
+button:focus-visible{ outline:2px solid var(--amber); outline-offset:3px; }
+
+@media (max-width:480px){
+  section{ padding:4.5rem 1.25rem; }
+  .flip-front, .flip-back{ padding:1.8rem 1.4rem; }
+  .flip-outer, .flip-inner{ min-height:480px; }
+  #fireflyZone{ height:140px; }
+}

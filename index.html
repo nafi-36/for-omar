@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You've Got This, Omar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="bg-stars" id="bgStars">
+    <div class="shooting-star"></div>
+  </div>
+
+  <div id="progressTrack"><div id="progressFill"></div></div>
+
+  <!-- ================= Opening overlay ================= -->
+  <div id="overlay">
+    <p class="pre">One long night of studying.<br>One small light before you sleep.</p>
+    <button id="openBtn">Open it</button>
+  </div>
+
+  <!-- ================= Hero ================= -->
+  <section id="hero">
+    <p class="eyebrow">Tonight, before the big day</p>
+    <h1>You've got this,<br><span>Omar</span></h1>
+    <p class="sub" id="heroSub">You studied all day. Tomorrow's just showing up and letting it come out.</p>
+
+    <div class="sunrise-scene">
+      <svg viewBox="0 0 340 110" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <linearGradient id="sunGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFD9A8"/>
+            <stop offset="100%" stop-color="#FF8C6B"/>
+          </linearGradient>
+          <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFB870" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#FFB870" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle id="sunGlow" cx="170" cy="80" r="55" fill="url(#glowGrad)"/>
+        <line x1="10" y1="80" x2="330" y2="80" stroke="#6C5F94" stroke-width="1.5" opacity="0.6"/>
+        <circle id="sunCircle" cx="170" cy="92" r="20" fill="url(#sunGrad)"/>
+      </svg>
+    </div>
+
+    <button id="sunriseBtn">Bring in the sunrise</button>
+    <p id="sunriseCaption"></p>
+
+    <div id="fireflyZone"></div>
+  </section>
+
+  <!-- ================= Recap ================= -->
+  <section id="recap" class="reveal">
+    <h2>Today, you:</h2>
+    <ul class="recap-list" id="recapList">
+      <li><span class="recap-check">✓</span><span>Studied for hours, even when it got hard</span></li>
+      <li><span class="recap-check">✓</span><span>Pushed through the parts that didn't make sense yet</span></li>
+      <li><span class="recap-check">✓</span><span>Showed up for yourself, one more time</span></li>
+    </ul>
+  </section>
+
+  <!-- ================= Breathing exercise ================= -->
+  <section id="breathe" class="reveal">
+    <h2>Take one breath before bed</h2>
+    <p class="sub" style="margin:0 auto;">A slow, counted breath can help settle a racing mind the night before something big.</p>
+    <div class="breathe-circle" id="breatheCircle"><span id="breatheLabel">Ready?</span></div>
+    <button id="breatheBtn">Start breathing</button>
+  </section>
+
+  <div class="divider"><span>✦</span></div>
+
+  <!-- ================= Letter (flip card) ================= -->
+  <section id="letter" class="reveal">
+    <div class="flip-outer">
+      <div class="flip-inner" id="flipInner">
+        <div class="flip-face flip-front" id="flipFront">
+          <div class="env-icon">
+            <svg width="44" height="34" viewBox="0 0 44 34">
+              <rect x="1" y="1" width="42" height="32" rx="3" fill="none" stroke="#FFB870" stroke-width="2"/>
+              <path d="M2,3 L22,20 L42,3" fill="none" stroke="#FFB870" stroke-width="2"/>
+            </svg>
+          </div>
+          <span class="env-label">You've got a message</span>
+          <span class="env-sub">Tap to open</span>
+        </div>
+
+        <div class="flip-face flip-back">
+          <span class="label">A NOTE FOR YOU</span>
+          <!-- ===== LETTER TEXT — edit this paragraph freely ===== -->
+          <p>Hey Omar,</p>
+          <p>I know today's been a long one — hours of studying, running through everything one more time before tomorrow's stage. I just wanted to remind you: you've already done the hard part. The knowledge is in there. Tomorrow is just you showing up and letting it come out.</p>
+          <p>Nursing school doesn't go easy on anyone, and you've made it this far anyway. That's not luck — that's you, showing up again and again even when it's exhausting.</p>
+          <p>Get some rest tonight if you can. Trust the hours you've put in. You've got this.</p>
+          <p class="signoff">— rooting for you, always</p>
+          <!-- ===== end letter text ===== -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Encouragement ================= -->
+  <section id="encourage" class="reveal">
+    <h2>Before you sleep tonight</h2>
+    <div class="divider"><span>✦</span></div>
+    <p class="anchor" id="quoteRotator">You don't have to feel ready to be ready. You've put in the work — trust it.</p>
+    <button id="moreQuoteBtn">One more, please</button>
+  </section>
+
+  <!-- ================= Spotify ================= -->
+  <section id="spotify" class="reveal">
+    <h2 style="text-align:center; margin-bottom:0.5rem;">A little something to listen to</h2>
+    <p class="sub" style="text-align:center; margin:0 auto 1.8rem;">Made this for you — good luck vibes only.</p>
+    <div class="spotify-embed">
+      <iframe
+        src="https://open.spotify.com/embed/playlist/3egwfg4ORUxjflk1RQeHq9?utm_source=generator&theme=0"
+        width="100%"
+        height="352"
+        frameborder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- ================= Closing ================= -->
+  <section id="closing" class="reveal">
+    <h2>Good luck tomorrow, Omar 🌅</h2>
+    <p class="sub">Get some rest. You've earned it.</p>
+    <button id="cheerBtn">Send some cheer</button>
+  </section>
+
+  <footer>Made with care, just for you.</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
